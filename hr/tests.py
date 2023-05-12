@@ -72,7 +72,7 @@ class CandidateListViewTest(TestCase):
         )
 
     def test_get_candidate_list(self):
-        response = self.client.get('/api/candidate-list/')  # Update the URL here
+        response = self.client.get('/api/candidate-list/',HTTP_X_ADMIN='1')  # Update the URL here
         candidates = Candidate.objects.all()
         serializer = CandidateSerializer(candidates, many=True)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -124,10 +124,10 @@ class ResumeViewTest(TestCase):
             date_of_birth='1996-06-16',
             years_of_experience=4,
             department=self.department,
-            resume='resumes/Ahmads_Resume.pdf'
+            resume='resumes/Ahmads_Resume.pdf',
         )
 
     def test_get_resume(self):
-        response = self.client.get(f'/api/get-resume/{self.candidate.id}/')  # Update the URL here
+        response = self.client.get(f'/api/get-resume/{self.candidate.id}/',HTTP_X_ADMIN='1')  # Update the URL here
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response['Content-Type'], 'application/json')
