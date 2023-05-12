@@ -29,7 +29,7 @@ class CandidateModelTest(TestCase):
             date_of_birth=date(1996, 6, 16),
             years_of_experience=4,
             department=self.department,
-            resume='resumes/Ahmads_Resume.pdf',
+            resume='resumes/Sprint 64.docx',
             created_at=None
         )
 
@@ -46,7 +46,7 @@ class CandidateModelTest(TestCase):
         self.assertEqual(self.candidate.department, self.department)
 
     def test_candidate_resume(self):
-        self.assertEqual(self.candidate.resume, 'resumes/Ahmads_Resume.pdf')
+        self.assertEqual(self.candidate.resume, 'resumes/Sprint 64.docx')
 
     def test_candidate_created_at(self):
         now = datetime.now(timezone.utc)
@@ -68,11 +68,11 @@ class CandidateListViewTest(TestCase):
             date_of_birth='1996-06-16',
             years_of_experience=4,
             department=self.department,
-            resume='resumes/Ahmads_Resume.pdf'
+            resume='resumes/Sprint 64.docx'
         )
 
     def test_get_candidate_list(self):
-        response = self.client.get('/api/candidate-list/')  # Update the URL here
+        response = self.client.get('/api/candidate-list/',HTTP_X_ADMIN='1')  # Update the URL here
         candidates = Candidate.objects.all()
         serializer = CandidateSerializer(candidates, many=True)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -90,7 +90,7 @@ class CandidateDetailTestCase(APITestCase):
             "date_of_birth": "1996-06-16",
             "department": 1,
             "years_of_experience": 4,
-            "resume": open('resumes/Ahmads_Resume.pdf', 'rb')
+            "resume": open('resumes/Sprint 64.docx', 'rb')
         }
         response = self.client.post(url, data, format='multipart')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -124,10 +124,10 @@ class ResumeViewTest(TestCase):
             date_of_birth='1996-06-16',
             years_of_experience=4,
             department=self.department,
-            resume='resumes/Ahmads_Resume.pdf'
+            resume='resumes/Sprint 64.docx'
         )
 
     def test_get_resume(self):
-        response = self.client.get(f'/api/get-resume/{self.candidate.id}/')  # Update the URL here
+        response = self.client.get(f'/api/get-resume/{self.candidate.id}/',HTTP_X_ADMIN='1')  # Update the URL here
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response['Content-Type'], 'application/json')
