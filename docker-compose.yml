@@ -1,0 +1,15 @@
+version: "3"
+services:
+  db:
+    image: mysql/mysql-server
+    environment:
+      - MYSQL_ROOT_PASSWORD=QWEqwe!1
+    ports:
+      - "3302:3302"
+
+  app:
+    image: ahmadsaadeh/hr-system-docker:latest
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
