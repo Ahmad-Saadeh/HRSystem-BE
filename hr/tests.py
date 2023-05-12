@@ -68,7 +68,7 @@ class CandidateListViewTest(TestCase):
             date_of_birth='1996-06-16',
             years_of_experience=4,
             department=self.department,
-            resume='resumes/Ahmads_Resume.pdf',
+            resume='resumes/Ahmads_Resume.pdf'
         )
 
     def test_get_candidate_list(self):
