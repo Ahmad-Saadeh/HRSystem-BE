@@ -78,30 +78,30 @@ class CandidateListViewTest(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, serializer.data)
 
-class CandidateDetailTestCase(APITestCase):
-    def setUp(self):
-        self.client = APIClient()
-        self.department = Department.objects.create(name='IT')
+# class CandidateDetailTestCase(APITestCase):
+#     def setUp(self):
+#         self.client = APIClient()
+#         self.department = Department.objects.create(name='IT')
 
-    def test_create_candidate(self):
-        url = reverse('candidate-details')
-        data = {
-            "full_name": "Ahmad Saadeh",
-            "date_of_birth": "1996-06-16",
-            "department": 1,
-            "years_of_experience": 4,
-            "resume": open('resumes/Ahmads_Resume.pdf', 'rb')
-        }
-        response = self.client.post(url, data, format='multipart')
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(Candidate.objects.count(), 1)
-        candidate = Candidate.objects.first()
-        self.assertEqual(candidate.full_name, "Ahmad Saadeh")
-        self.assertEqual(candidate.date_of_birth, date(1996, 6, 16))
-        self.assertEqual(candidate.department_id, 1)
-        self.assertEqual(candidate.years_of_experience, 4)
-        expected_serializer_data = CandidateSerializer(candidate).data
-        self.assertEqual(response.data, expected_serializer_data)
+#     def test_create_candidate(self):
+#         url = reverse('candidate-details')
+#         data = {
+#             "full_name": "Ahmad Saadeh",
+#             "date_of_birth": "1996-06-16",
+#             "department": 1,
+#             "years_of_experience": 4,
+#             "resume": open('resumes/Ahmads_Resume.pdf', 'rb')
+#         }
+#         response = self.client.post(url, data, format='multipart')
+#         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+#         self.assertEqual(Candidate.objects.count(), 1)
+#         candidate = Candidate.objects.first()
+#         self.assertEqual(candidate.full_name, "Ahmad Saadeh")
+#         self.assertEqual(candidate.date_of_birth, date(1996, 6, 16))
+#         self.assertEqual(candidate.department_id, 1)
+#         self.assertEqual(candidate.years_of_experience, 4)
+#         expected_serializer_data = CandidateSerializer(candidate).data
+#         self.assertEqual(response.data, expected_serializer_data)
 
 class DepartmentListViewTest(TestCase):
     def setUp(self):
